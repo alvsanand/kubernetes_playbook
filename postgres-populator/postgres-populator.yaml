@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: postgres-populator-job
+spec:
+  template:
+    metadata:
+      name: postgres-populator-job
+    spec:
+      containers:
+      - name: postgres-populator-container
+        image: postgres-populator:1.0.0
+      restartPolicy: Never
