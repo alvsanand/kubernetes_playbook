@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: simple-node-app-pod
+  labels:
+    app: simple-node-app
+spec:
+  containers:
+    - name: simple-node-app-container
+      image: simple-node-app:1.0.0
+      ports:
+        - containerPort: 8080
+          name: "node"

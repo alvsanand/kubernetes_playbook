@@ -1,6 +1,12 @@
 # kubernetes_playbook
 
-## General
+This project contains a Kubernetes Playbook which provides the following services:
+
+* MongoDB with persistent storage
+* MongoDB intialiazer Job
+* Simple Node.JS app which queries to MongoDB.
+
+## Generic
 
 ### Setup Docker environment
 
@@ -26,60 +32,95 @@ sudo systemctl restart nfs-server
 ```
 kubectl create -f busybox.yaml
 
+kubectl describe pod busybox
+
 kubectl exec -ti busybox -- echo "TEST"
 ```
 
-## Postgres server
+## MongoDB server
 
 ### Persisten Volume
 
 ```
-sudo mkdir -p /var/nfs/postgres
+sudo mkdir -p /var/nfs/mongodb
 
-kubectl create -f postgres/postgres-volume.yaml
+kubectl create -f mongodb/mongodb-volume.yaml
 
-kubectl get pv postgres-volume
+kubectl describe pv mongodb-volume
 ```
 
-## Postgres Volume Claim
+### MongoDB Volume Claim
 
 ```
-kubectl create -f postgres/postgres-volume-claim.yaml
+kubectl create -f mongodb/mongodb-volume-claim.yaml
 
-kubectl get pvc postgres-claim
+kubectl describe pvc mongodb-claim
 ```
 
-## Postgres Pod
+### MongoDB Pod
 
 ```
-kubectl create -f postgres/postgres.yaml
+kubectl create -f mongodb/mongodb.yaml
 
-kubectl get pod postgres-pod
+kubectl describe pod mongodb-pod
+
+kubectl logs mongodb-pod
 ```
 
-## Postgres Service
+### MongoDB Service
 
 ```
-kubectl create -f postgres/postgres-service.yaml
+kubectl create -f mongodb/mongodb-service.yaml
 
-kubectl get service postgres-service
+kubectl describe service mongodb-service
 
 # Check DNS
-kubectl exec -ti busybox -- nslookup postgres-service.default
+kubectl exec -ti busybox -- nslookup mongodb-service.default
 ```
 
-## Postgres populator
+## MongoDB populator
 
-### Create Image
-
-```
-docker build -t postgres-populator:1.0.0 postgres-populator/
-```
-
-## Postgres Job
+### Build Image
 
 ```
-kubectl create -f postgres-populator/postgres-populator.yaml
+docker build -t mongodb-populator:1.0.0 mongodb-populator/
+```
 
-kubectl get job postgres-populator-job
+### MongoDB Job
+
+```
+kubectl create -f mongodb-populator/mongodb-populator.yaml
+
+POD=$(kubectl get pods --show-all --selector=job-name=mongodb-populator-job --output=jsonpath={.items..metadata.name} | tail -1)
+kubectl logs $POD
+```
+
+## Simple Node App server
+
+### Build Image
+
+```
+docker build -t simple-node-app:1.0.0 simple-node-app/
+```
+
+### Simple Node App Pod
+
+```
+kubectl create -f simple-node-app/simple-node-app.yaml
+
+kubectl describe pod simple-node-app-pod
+
+kubectl logs simple-node-app-pod
+```
+
+### Simple Node App Service
+
+```
+kubectl create -f simple-node-app/simple-node-app-service.yaml
+
+kubectl describe service simple-node-app-service
+
+kubectl exec -ti busybox -- curl http://simple-node-app-service.default:8080
+
+minikube service simple-node-app-service
 ```

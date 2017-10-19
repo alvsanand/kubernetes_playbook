@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Node App</title>
+</head>
+<body>
+  Simple Node App which reads cities from MongoDB.
+
+  <ul class="cities">
+  <% for(var i=0; i<cities.length; i++) {%>
+    <li class="city">
+      <span><%= cities[i].city %></span>
+      <span><%= cities[i].state %></span>
+      <span><%= cities[i].pop %></span>
+    </li>
+  <% } %>
+  </ul>
+</body>
+</html>

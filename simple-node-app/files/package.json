@@ -1,0 +1,15 @@
+{
+    "name": "simple-node-app",
+    "version": "1.0.0",
+    "description": "Simple Node App",
+    "author": "alvsanand@gmail.com",
+    "main": "server.js",
+    "scripts": {
+      "start": "node server.js"
+    },
+    "dependencies": {
+      "express": "4.13.3",
+      "mongodb": "2.2.33",
+      "ejs": "2.5.7"
+    }
+  }

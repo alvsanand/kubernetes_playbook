@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: postgres-volume
+  name: mongodb-volume
 spec:
   capacity:
     storage: 5Gi
@@ -10,5 +10,5 @@ spec:
   persistentVolumeReclaimPolicy: Recycle
   storageClassName: slow
   nfs:
-    path: /var/nfs/postgres
+    path: /var/nfs/mongodb
     server: 192.168.99.1

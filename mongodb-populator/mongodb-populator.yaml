@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mongodb-populator-job
+spec:
+  template:
+    metadata:
+      name: mongodb-populator-job
+    spec:
+      containers:
+      - name: mongodb-populator-container
+        image: mongodb-populator:1.0.0
+      restartPolicy: Never
