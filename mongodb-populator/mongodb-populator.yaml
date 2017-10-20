@@ -10,4 +10,15 @@ spec:
       containers:
       - name: mongodb-populator-container
         image: mongodb-populator:1.0.0
+        env:
+          - name: MONGO_USER
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-secret
+                key: username
+          - name: MONGO_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-secret
+                key: password
       restartPolicy: Never

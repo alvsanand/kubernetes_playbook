@@ -14,5 +14,7 @@ ENV MONGO_HOSTNAME "mongodb-service.default"
 ENV MONGO_PORT "27017"
 ENV MONGO_DB "test"
 ENV MONGO_URI "${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}"
+ENV MONGO_USER "admin"
+ENV MONGO_PASSWORD "admin"
 
-CMD "/usr/bin/mongo" "$MONGO_URI" "/tmp/commands.js"
+CMD "/usr/bin/mongo" "-u" "$MONGO_USER" "-p" "$MONGO_PASSWORD" "$MONGO_URI" "/tmp/commands.js"

@@ -57,6 +57,14 @@ kubectl create -f mongodb/mongodb-volume-claim.yaml
 kubectl describe pvc mongodb-claim
 ```
 
+### MongoDB Secrets
+
+```
+kubectl create -f mongodb/mongodb-secrets.yaml
+
+kubectl describe pv mongodb-volume
+```
+
 ### MongoDB Pod
 
 ```
@@ -108,9 +116,7 @@ docker build -t simple-node-app:1.0.0 simple-node-app/
 ```
 kubectl create -f simple-node-app/simple-node-app.yaml
 
-kubectl describe pod simple-node-app-pod
-
-kubectl logs simple-node-app-pod
+kubectl describe deployment simple-node-app-deployment
 ```
 
 ### Simple Node App Service
